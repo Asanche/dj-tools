@@ -30,12 +30,21 @@ excluded_genres = {'breaks', 'drum and bass'}
 artist_genre_rules = {
     ('harmony', 'musical advocacy'): ['jungle'],
     ('sound in noise', 'estonian electronic'): ['drum and bass', 'neurofunk'],
-    ('jon casey', 'south african electronic'): ['halftime dnb', 'drum and bass']
+    ('missin', 'serbian electronic'): ['drum and bass', 'neurofunk'],
+    ('jon casey', 'south african electronic'): ['halftime dnb', 'drum and bass'],
+    ('jon casey', 'miami electronic'): ['halftime dnb', 'drum and bass'],
+    ('jon casey', 'miami electronic'): ['halftime dnb', 'drum and bass'],
+    ('baby t', 'munich electronic'): ['breaks', 'techno'],
+    ('viers', 'experimental club'): ['breaks', 'techno'],
+    ('fourward', 'electronica'): ['drum and bass', 'neurofunk'],
+    ('hybrid minds', 'neo mellow'): ['drum and bass', 'liquid funk'],
+    ('hybrid minds', 'uk pop'): ['drum and bass', 'liquid funk'],
+    ('hybrid minds', 'viral pop'): ['drum and bass', 'liquid funk'],
     # Add more specific artist/genre pairing rules as needed
 }
 
 def extract_artists(audio):
-    """Extract artists from the audio metadata, including remix artists from the title."""
+    """Extract artists from the audio metadata, including featuring and remix artists from the title."""
     artists = set()
 
     # Extract main artists
@@ -43,12 +52,18 @@ def extract_artists(audio):
         for artist in audio['artist'][0].split(','):
             artists.add(artist.strip().lower())
 
-    # Extract remix artists from the title
+    # Extract featuring artists from the title
     if 'title' in audio:
-        match = re.findall(r'\((.*?) remix\)', audio['title'][0], re.IGNORECASE)
-        if match:
-            for remix_artist in match:
-                artists.add(remix_artist.strip().lower())
+        feature_matches = re.findall(r'\(featuring ([^)]+)\)', audio['title'][0], re.IGNORECASE)
+        for match in feature_matches:
+            feature_artist = match.strip().lower()
+            artists.add(feature_artist)
+        
+        # Extract remix artists from the title
+        remix_matches = re.findall(r'\(([^)]+ remix)\)', audio['title'][0], re.IGNORECASE)
+        for match in remix_matches:
+            remix_artist = match.lower().replace(' remix', '').strip()
+            artists.add(remix_artist)
     
     return artists
 
