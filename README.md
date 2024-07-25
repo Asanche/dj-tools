@@ -14,7 +14,10 @@ This script also will output a summary of genres you may want to add rules to.
 
 ### Setup:
 chmod +x setup_env.sh
+
 ./setup_env.sh
+
+source venv/bin/activate
 
 ### Use
 python3 normalizeGenres -path <relative_path_to_music_library>
