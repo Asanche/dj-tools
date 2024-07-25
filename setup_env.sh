@@ -1,4 +1,3 @@
-# setup_env.sh
 #!/bin/bash
 
 # Check if the virtual environment directory exists
@@ -11,6 +10,6 @@ echo "Activating virtual environment..."
 source venv/bin/activate
 
 echo "Installing required packages..."
-pip3 install -r requirements.txt
+./venv/bin/pip install -r requirements.txt
 
 echo "Environment setup complete. Virtual environment is activated."
