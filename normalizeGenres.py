@@ -40,6 +40,7 @@ artist_genre_rules = {
     ('hybrid minds', 'neo mellow'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'uk pop'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'viral pop'): ['drum and bass', 'liquid funk'],
+    ('phibes', 'bass house'): ['drum and bass', 'jump up'], # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
     # Add more specific artist/genre pairing rules as needed
 }
 
