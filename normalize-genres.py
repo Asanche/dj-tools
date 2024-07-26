@@ -6,7 +6,7 @@ from mutagen.id3 import ID3NoHeaderError
 
 # Define the alias lookup dictionary with regular expressions for wildcards
 alias_lookup = {
-    ('liquid dnb', 'liquid drum and bass'): ['liquid funk'], # Multiple aliases example
+    ('liquid dnb', 'liquid drum and bass'): ['liquid funk'],  # Multiple aliases example
     ('filthstep', 'neurofunk', 'neurostep', 'darkstep', 'liquid funk', 'drum funk', 'drumfunk', 'chill breakcore', 'jump up', 'tech step'): ['drum and bass'],
     ('deep liquid bass', 'deep rai', 'charva'): ['deep dnb', 'liquid funk', 'drum and bass'],
     ('bassline', 'boston electronic', 'wonky', 'experimental bass'): ['dub', 'halftime dnb'],
@@ -20,8 +20,7 @@ alias_lookup = {
     r'.*house.*$': ['house'],
     r'.*trap.*$': ['trap'],
     r'.*hardcore.*$': ['hardcore'],
-    # r'.*hip\bhop.*$': ['hip hop'],
-    r'.*dub.*$': ['dub'], # this will do "deep dub", "dubstep" or even "minimal dub" => dub
+    r'.*dub.*$': ['dub'],  # This will do "deep dub", "dubstep" or even "minimal dub" => dub
     # Add more aliases as needed
 }
 
@@ -43,7 +42,7 @@ artist_genre_rules = {
     ('hybrid minds', 'neo mellow'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'uk pop'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'viral pop'): ['drum and bass', 'liquid funk'],
-    ('phibes', 'bass house'): ['drum and bass', 'jump up', 'dancefloor dnb'], # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
+    ('phibes', 'bass house'): ['drum and bass', 'jump up', 'dancefloor dnb'],  # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
     # Add more specific artist/genre pairing rules as needed
 }
 
@@ -72,9 +71,10 @@ def extract_artists(audio):
     return artists
 
 def normalize_genre(artists, genres):
+    """Normalize genres based on alias lookup and specific artist/genre pairing rules."""
     updated_genres = set(genres)
     for genre in genres:
-        genre_lower = genre.lower()
+        genre_lower = genre.lower().strip()  # Trim whitespace and convert to lowercase
         matched = False
 
         # Check artist/genre specific rules first
@@ -98,9 +98,11 @@ def normalize_genre(artists, genres):
     return list(updated_genres)
 
 def process_files(folder_path):
+    """Process files in the given folder to normalize genre tags based on alias lookup."""
     alias_found_count = 0
     no_genre_count = 0
     unmatched_genres = {}  # To track genres not matched by alias lookup
+    no_genre_files = []    # To track files with no genre tags
 
     for root, dirs, files in os.walk(folder_path):
         for file in files:
@@ -113,7 +115,8 @@ def process_files(folder_path):
 
                 artists = extract_artists(audio)
                 if 'genre' in audio:
-                    genres = audio['genre'][0].split(', ')
+                    # Trim whitespace from genre tags
+                    genres = [genre.strip() for genre in audio['genre'][0].split(', ')]
                     updated_genres = normalize_genre(artists, genres)
                     updated_genres_str = ', '.join(updated_genres)
                     
@@ -148,11 +151,15 @@ def process_files(folder_path):
                                 unmatched_genres[genre].append((artists, file_path))
                 else:
                     no_genre_count += 1
+                    no_genre_files.append((audio.get('title', ['Unknown Title'])[0], file_path))
                     print(f"No genre tag found in file: {file_path}")
 
     print(f"\nSummary:")
     print(f"Songs found with aliases: {alias_found_count}")
     print(f"Songs found with no genre tag: {no_genre_count}")
+    if no_genre_files:
+        for title, path in no_genre_files:
+            print(f" - {title} ({path})")
 
     if unmatched_genres:
         print("\nUnmatched genres that might need new rules:")
