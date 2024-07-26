@@ -13,7 +13,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 
 # Forward arguments to the Python script
-python3 normalizeGenres.py "$@"
+python3 normalize-genres.py "$@"
 
 # Deactivate the virtual environment
 deactivate

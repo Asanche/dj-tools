@@ -7,17 +7,19 @@ from mutagen.id3 import ID3NoHeaderError
 # Define the alias lookup dictionary with regular expressions for wildcards
 alias_lookup = {
     ('liquid dnb', 'liquid drum and bass'): ['liquid funk'], # Multiple aliases example
-    ('filthstep', 'neurofunk', 'neurostep', 'darkstep', 'liquid funk', 'drum funk', 'drumfunk', 'chill breakcore'): ['drum and bass'],
+    ('filthstep', 'neurofunk', 'neurostep', 'darkstep', 'liquid funk', 'drum funk', 'drumfunk', 'chill breakcore', 'jump up', 'tech step'): ['drum and bass'],
     ('deep liquid bass', 'deep rai', 'charva'): ['deep dnb', 'liquid funk', 'drum and bass'],
-    ('bassline', 'boston electronic', 'wonky'): ['dub', 'halftime dnb'],
+    ('bassline', 'boston electronic', 'wonky', 'experimental bass'): ['dub', 'halftime dnb'],
     'breakbeat': ['breaks'],
     'raggatek': ['hardcore', 'drum and bass', 'tekno'],
+    ('speedcore', 'tekno', 'tek'): ['hardcore'],
     r'.*dnb.*$': ['drum and bass'],  # Regex wildcard example ("uk dnb" or "dnb xyz" => "drum and bass")
     r'.*techno.*$': ['techno'],
     r'.*jungle.*$': ['jungle'],
     r'.*ukg.*$': ['garage', 'ukg'],
     r'.*house.*$': ['house'],
     r'.*trap.*$': ['trap'],
+    r'.*hardcore.*$': ['hardcore'],
     # r'.*hip\bhop.*$': ['hip hop'],
     r'.*dub.*$': ['dub'], # this will do "deep dub", "dubstep" or even "minimal dub" => dub
     # Add more aliases as needed
@@ -33,14 +35,15 @@ artist_genre_rules = {
     ('missin', 'serbian electronic'): ['drum and bass', 'neurofunk'],
     ('jon casey', 'south african electronic'): ['halftime dnb', 'drum and bass'],
     ('jon casey', 'miami electronic'): ['halftime dnb', 'drum and bass'],
-    ('jon casey', 'miami electronic'): ['halftime dnb', 'drum and bass'],
+    ('jon casey', 'gauze pop'): ['halftime dnb', 'drum and bass'],
     ('baby t', 'munich electronic'): ['breaks', 'techno'],
+    ('billain', 'croatian electronic'): ['drum and bass', 'neurofunk', 'darkstep'],
     ('viers', 'experimental club'): ['breaks', 'techno'],
     ('fourward', 'electronica'): ['drum and bass', 'neurofunk'],
     ('hybrid minds', 'neo mellow'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'uk pop'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'viral pop'): ['drum and bass', 'liquid funk'],
-    ('phibes', 'bass house'): ['drum and bass', 'jump up'], # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
+    ('phibes', 'bass house'): ['drum and bass', 'jump up', 'dancefloor dnb'], # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
     # Add more specific artist/genre pairing rules as needed
 }
 

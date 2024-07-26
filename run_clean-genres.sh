@@ -13,7 +13,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 
 # Forward arguments to the Python script
-python3 clear-beatport-tags.py "$@"
+python3 clean-genres.py "$@"
 
 # Deactivate the virtual environment
 deactivate
