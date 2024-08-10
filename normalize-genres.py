@@ -106,6 +106,8 @@ def process_files(folder_path):
 
     for root, dirs, files in os.walk(folder_path):
         for file in files:
+            print(f"Processing {file}")
+
             if file.endswith(('.mp3', '.flac', '.m4a', '.ogg', '.wav')):
                 file_path = os.path.join(root, file)
                 try:
