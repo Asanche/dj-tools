@@ -42,6 +42,7 @@ artist_genre_rules = {
     ('hybrid minds', 'neo mellow'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'uk pop'): ['drum and bass', 'liquid funk'],
     ('hybrid minds', 'viral pop'): ['drum and bass', 'liquid funk'],
+    ('skellytn', 'drum and bass'): ['neurofunk'], # her stuff is never marked neuro for some reason...
     ('phibes', 'bass house'): ['drum and bass', 'jump up', 'dancefloor dnb'],  # A tonne of their music is mislabeled as house. They make basshouse, but most of this is DnB...
     # Add more specific artist/genre pairing rules as needed
 }
@@ -176,7 +177,10 @@ def main():
     parser.add_argument('-path', type=str, help='Relative path to the folder', required=True)
     args = parser.parse_args()
 
-    folder_path = args.path
+    folder_path = args.path.strip('\'"')
+
+    print(f"Running normalize-genres.py for path: {folder_path}")
+
     process_files(folder_path)
 
 if __name__ == '__main__':

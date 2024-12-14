@@ -5,8 +5,7 @@ from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3NoHeaderError
 
 def log_error(message):
-    with open("error_log.txt", "a") as log_file:
-        log_file.write(message + "\n")
+    print(f"{message}\n")
 
 def clear_genre_if_capitalized_or_special(folder_path, move_to_processed):    
     processed_folder = os.path.join(folder_path, 'processed')
@@ -14,6 +13,9 @@ def clear_genre_if_capitalized_or_special(folder_path, move_to_processed):
         os.makedirs(processed_folder)
 
     for root, dirs, files in os.walk(folder_path):
+
+        print(f"Processing {len(files)} files")
+
         for file in files:
             print(f"Processing {file}")
             if file.endswith(('.mp3', '.flac', '.m4a', '.ogg', '.wav')):
@@ -71,8 +73,11 @@ def main():
     parser.add_argument('--move', action='store_true', help='Move files with lowercase genre tags to a "processed" sub-folder')
     args = parser.parse_args()
 
-    folder_path = args.path
+    folder_path = args.path.strip('\'"')
     move_to_processed = args.move
+
+    print(f"Running clean-genres.py for path: {folder_path}")
+
     clear_genre_if_capitalized_or_special(folder_path, move_to_processed)
 
 if __name__ == '__main__':
